@@ -1,0 +1,25 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Sun Dec  1 17:59:27 2024
+# Process ID: 3968
+# Current directory: E:/32bit_ALU/ALU
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent23124 E:\32bit_ALU\ALU\ALU.xpr
+# Log file: E:/32bit_ALU/ALU/vivado.log
+# Journal file: E:/32bit_ALU/ALU\vivado.jou
+# Running On        :LAPTOP-MUII7O6N
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :22631
+# Processor Detail  :13th Gen Intel(R) Core(TM) i5-13500H
+# CPU Frequency     :3187 MHz
+# CPU Physical cores:12
+# CPU Logical cores :16
+# Host memory       :16890 MB
+# Swap memory       :107331 MB
+# Total Virtual     :124221 MB
+# Available Virtual :107830 MB
+#-----------------------------------------------------------
+start_gui
+open_project E:/32bit_ALU/ALU/ALU.xpr
