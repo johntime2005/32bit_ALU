@@ -150,3 +150,19 @@ Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 // Tcl Message: open_project: Time (s): cpu = 00:00:13 ; elapsed = 00:00:06 . Memory (MB): peak = 1593.480 ; gain = 116.516 
 dismissDialog("Open Project"); // bj (Open Project Progress)
 selectTree(PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE, "[root, Design Sources]", 0, false); // E (PAResourceEtoH.FileSetPanel_FILE_SET_PANEL_TREE)
+// Elapsed time: 310 seconds
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, Project Manager, Settings]", 1, false); // g (PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, Flow Navigator Tree)
+// Run Command: RDIResourceCommand.RDICommands_SETTINGS
+// Tcl (Dont Echo) Command: 'rdi::info_commands {device::*}'
+// Tcl (Dont Echo) Command: 'rdi::info_commands {debug::*}'
+// Tcl (Dont Echo) Command: 'rdi::info_commands {*}'
+// [GUI Memory]: 162 MB (+58kb) [00:05:30]
+// [Engine Memory]: 1,255 MB (+6240kb) [00:05:30]
+// WARNING: HEventQueue.dispatchEvent() is taking  1021 ms.
+// HMemoryUtils.trashcanNow. Engine heap size: 1,287 MB. GUI used memory: 90 MB. Current time: 12/1/24, 5:59:35 PM CST
+selectTree(PAResourceQtoS.SettingsDialog_OPTIONS_TREE, "[optionsRoot, Text Editor]", 6, true); // s (PAResourceQtoS.SettingsDialog_OPTIONS_TREE, Options Tree) - Node
+setText("Editor:", "\"D:/Microsoft VS Code/bin/code.cmd\" -g [file name]:[line number]"); // R (Editor:)
+selectButton(RDIResource.BaseDialog_OK, "OK", "Custom Editor Definition"); // a (RDIResource.BaseDialog_OK)
+dismissDialog("Custom Editor Definition"); // d.a (dialog1)
+dismissDialog("Settings"); // d (dialog0)
+// [GUI Memory]: 187 MB (+17314kb) [00:08:07]
