@@ -1,26 +1,26 @@
 `timescale 1ns / 1ps
 
-//ALUÄ£¿é
+//ALUæ¨¡å—
 module ALU(OP,A,B,Rst,clk,F,ZF,CF,OF,SF,PF);
-    parameter SIZE = 31;//ÔËËãÎ»Êı
-    input [3:0] OP;//ÔËËã²Ù×÷
-    input [SIZE:0] A;//×óÔËËãÊı
-    input [SIZE:0] B;//ÓÒÔËËãÊı
-    input Rst,clk; //Ê±ĞòÂß¼­µçÂ·ĞÅºÅ
-    output [SIZE:0] F;//ÔËËã½á¹û
-    output  ZF, //0±êÖ¾Î», ÔËËã½á¹ûÎª0(È«Áã)ÔòÖÃ1, ·ñÔòÖÃ0 
-            CF, //½ø½èÎ»±êÖ¾Î», È¡×î¸ßÎ»½øÎ»C,¼Ó·¨Ê±C=1ÔòCF=1±íÊ¾ÓĞ½øÎ»,¼õ·¨Ê±C=0ÔòCF=1±íÊ¾ÓĞ½èÎ»
-            OF, //Òç³ö±êÖ¾Î»£¬¶ÔÓĞ·ûºÅÊıÔËËãÓĞÒâÒå£¬Òç³öÔòOF=1£¬·ñÔòÎª0
-            SF, //·ûºÅ±êÖ¾Î»£¬ÓëFµÄ×î¸ßÎ»ÏàÍ¬
-            PF; //ÆæÅ¼±êÖ¾Î»£¬FÓĞÆæÊı¸ö1£¬ÔòPF=1£¬·ñÔòÎª0
+    parameter SIZE = 31;//è¿ç®—ä½æ•°
+    input [3:0] OP;//è¿ç®—æ“ä½œ
+    input [SIZE:0] A;//å·¦è¿ç®—æ•°
+    input [SIZE:0] B;//å³è¿ç®—æ•°
+    input Rst,clk; //æ—¶åºé€»è¾‘ç”µè·¯ä¿¡å·
+    output [SIZE:0] F;//è¿ç®—ç»“æœ
+    output  ZF, //0æ ‡å¿—ä½, è¿ç®—ç»“æœä¸º0(å…¨é›¶)åˆ™ç½®1, å¦åˆ™ç½®0 
+            CF, //è¿›å€Ÿä½æ ‡å¿—ä½, å–æœ€é«˜ä½è¿›ä½C,åŠ æ³•æ—¶C=1åˆ™CF=1è¡¨ç¤ºæœ‰è¿›ä½,å‡æ³•æ—¶C=0åˆ™CF=1è¡¨ç¤ºæœ‰å€Ÿä½
+            OF, //æº¢å‡ºæ ‡å¿—ä½ï¼Œå¯¹æœ‰ç¬¦å·æ•°è¿ç®—æœ‰æ„ä¹‰ï¼Œæº¢å‡ºåˆ™OF=1ï¼Œå¦åˆ™ä¸º0
+            SF, //ç¬¦å·æ ‡å¿—ä½ï¼Œä¸Fçš„æœ€é«˜ä½ç›¸åŒ
+            PF; //å¥‡å¶æ ‡å¿—ä½ï¼ŒFæœ‰å¥‡æ•°ä¸ª1ï¼Œåˆ™PF=1ï¼Œå¦åˆ™ä¸º0
     reg [SIZE:0] F;
     wire [SIZE:0] F2;
     reg flag=0;
     reg C;
-    wire ZF,CF,OF,SF,PF,Carry;//CÎª×î¸ßÎ»½øÎ»
+    wire ZF,CF,OF,SF,PF,Carry;//Cä¸ºæœ€é«˜ä½è¿›ä½
     wire cout;
 
-    // Ò»Î»È«¼ÓÆ÷
+    // ä¸€ä½å…¨åŠ å™¨
     task fulladder(
         input  a,b,cin,
         output sum,cout
@@ -32,7 +32,7 @@ module ALU(OP,A,B,Rst,clk,F,ZF,CF,OF,SF,PF);
     endtask
     
     // ************************************************************************
-    // 32Î»´®ĞĞ½øÎ»¼Ó·¨Æ÷
+    // 32ä½ä¸²è¡Œè¿›ä½åŠ æ³•å™¨
     task full_adder_32bit(
         input [31:0] a,b,
         output [31:0] sum,
@@ -79,8 +79,8 @@ module ALU(OP,A,B,Rst,clk,F,ZF,CF,OF,SF,PF);
     // ************************************************************************
     
     // ************************************************************************
-    // 32Î»³¬Ç°½øÎ»¼Ó·¨Æ÷
-    /******************4Î»CLA²¿¼ş************************/
+    // 32ä½è¶…å‰è¿›ä½åŠ æ³•å™¨
+    /******************4ä½CLAéƒ¨ä»¶************************/
     task CLA(
          input c0,g1,g2,g3,g4,p1,p2,p3,p4,
          output c1,c2,c3,c4);
@@ -94,7 +94,7 @@ module ALU(OP,A,B,Rst,clk,F,ZF,CF,OF,SF,PF);
          
     endtask
     
-    //ËÄÎ»²¢ĞĞ½øÎ»¼Ó·¨Æ÷
+    //å››ä½å¹¶è¡Œè¿›ä½åŠ æ³•å™¨
     task adder_4(
          input [3:0] x,
          input [3:0] y,
@@ -145,7 +145,7 @@ module ALU(OP,A,B,Rst,clk,F,ZF,CF,OF,SF,PF);
         end
     endtask
     
-    //16Î»CLA²¿¼ş
+    //16ä½CLAéƒ¨ä»¶
     task CLA_16(
         input [15:0] A,
         input [15:0] B,
@@ -243,14 +243,14 @@ module ALU(OP,A,B,Rst,clk,F,ZF,CF,OF,SF,PF);
     begin
         C=0;
         case(OP)
-            4'b0000:begin F=A&B; end    //°´Î»Óë
-            4'b0001:begin F=A|B; end    //°´Î»»ò
-            4'b0010:begin F=A^B; end    //°´Î»Òì»ò
-            4'b0011:begin F=~(A|B); end //°´Î»»ò·Ç
-            4'b0100:begin full_adder_32bit(A,B,F,C); end//´®ĞĞ½øÎ»¼Ó·¨
-            4'b0101:begin adder32(A,B,F,C); end //³¬Ç°½øÎ»¼Ó·¨
-            4'b0110:begin F=A<B; end    //A<BÔòF=1£¬·ñÔòF=0
-            4'b0111:begin F=B<<A; end   //½«B×óÒÆAÎ»
+            4'b0000:begin F=A&B; end    //æŒ‰ä½ä¸
+            4'b0001:begin F=A|B; end    //æŒ‰ä½æˆ–
+            4'b0010:begin F=A^B; end    //æŒ‰ä½å¼‚æˆ–
+            4'b0011:begin F=~(A|B); end //æŒ‰ä½æˆ–é
+            4'b0100:begin full_adder_32bit(A,B,F,C); end//ä¸²è¡Œè¿›ä½åŠ æ³•
+            4'b0101:begin adder32(A,B,F,C); end //è¶…å‰è¿›ä½åŠ æ³•
+            4'b0110:begin F=A<B; end    //A<Båˆ™F=1ï¼Œå¦åˆ™F=0
+            4'b0111:begin F=B<<A; end   //å°†Bå·¦ç§»Aä½
             4'b1000:begin 
                 F<=F2;
                 C<=Carry; 
@@ -259,19 +259,19 @@ module ALU(OP,A,B,Rst,clk,F,ZF,CF,OF,SF,PF);
         
     end
     
-    assign PF = ~^F;//ÆæÅ¼±êÖ¾£¬FÓĞÆæÊı¸ö1£¬ÔòF=1£»Å¼Êı¸ö1£¬ÔòF=0
-    assign ZF = F==0;//FÈ«Îª0£¬ÔòZF=1
-    assign CF = C; //½øÎ»½èÎ»±ê
-    assign OF = A[SIZE]^B[SIZE]^F[SIZE]^C;//Òç³ö±êÖ¾¹«Ê½
-    assign SF = F[SIZE];//·ûºÅ±êÖ¾,È¡FµÄ×î¸ßÎ»
+    assign PF = ~^F;//å¥‡å¶æ ‡å¿—ï¼ŒFæœ‰å¥‡æ•°ä¸ª1ï¼Œåˆ™F=1ï¼›å¶æ•°ä¸ª1ï¼Œåˆ™F=0
+    assign ZF = F==0;//Få…¨ä¸º0ï¼Œåˆ™ZF=1
+    assign CF = C; //è¿›ä½å€Ÿä½æ ‡
+    assign OF = A[SIZE]^B[SIZE]^F[SIZE]^C;//æº¢å‡ºæ ‡å¿—å…¬å¼
+    assign SF = F[SIZE];//ç¬¦å·æ ‡å¿—,å–Fçš„æœ€é«˜ä½
     
 endmodule
 
-//// Õæ¡¤´®ĞĞ½øÎ»¼Ó·¨Æ÷
-//// ÊµÏÖÔ­Àí£ºÀûÓÃÁ½¸öÒÆÎ»¼Ä´æÆ÷+Ò»¸ö½øÎ»´¥·¢Æ÷+Ò»¸öÈ«¼ÓÆ÷
-//// ÎÒÃÇÏÖÔÚÒªÉè¼ÆÒ»¸öµçÂ·£¬ÔÚÊ±ÖÓÖÜÆÚÄÚ´¦ÀíÒ»Î»Ïà¼ÓµÄ´®ĞĞ¼Ó·¨¡£
+//// çœŸÂ·ä¸²è¡Œè¿›ä½åŠ æ³•å™¨
+//// å®ç°åŸç†ï¼šåˆ©ç”¨ä¸¤ä¸ªç§»ä½å¯„å­˜å™¨+ä¸€ä¸ªè¿›ä½è§¦å‘å™¨+ä¸€ä¸ªå…¨åŠ å™¨
+//// æˆ‘ä»¬ç°åœ¨è¦è®¾è®¡ä¸€ä¸ªç”µè·¯ï¼Œåœ¨æ—¶é’Ÿå‘¨æœŸå†…å¤„ç†ä¸€ä½ç›¸åŠ çš„ä¸²è¡ŒåŠ æ³•ã€‚
 
-// Ò»Î»È«¼ÓÆ÷
+// ä¸€ä½å…¨åŠ å™¨
 module fulladder(
     input wire a,b,cin,
     output wire sum,cout
@@ -280,7 +280,7 @@ module fulladder(
     assign cout = (a&b)|((a^b)&cin);
 endmodule
 
-// ÒÆÎ»¼Ä´æÆ÷£¬Ö±½ÓÈ¡Q[0]¼´¿É
+// ç§»ä½å¯„å­˜å™¨ï¼Œç›´æ¥å–Q[0]å³å¯
 module shiftrne(R,L,E,w,clk,Q);
 
    parameter n=32;
@@ -342,14 +342,14 @@ module serialadd(A,B,Rst,clk,S,Carry);
 		endcase
   end
 
-  //Ê±ĞòĞÅºÅ
+  //æ—¶åºä¿¡å·
   always @(posedge clk)
     if(Rst)
 	   y<=G;
 	 else
 	    y<=Y;
 
-  //ÒÆÎ»¿ØÖÆ²Ù×÷·û
+  //ç§»ä½æ§åˆ¶æ“ä½œç¬¦
   always @(posedge clk)
     if(Rst) Count=32;
 	 else if(Run) Count = Count-1;
