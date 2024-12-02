@@ -21,7 +21,7 @@
 
 
 module ALU (
-    OP,
+    OP
     A,
     B,
     RESULT
