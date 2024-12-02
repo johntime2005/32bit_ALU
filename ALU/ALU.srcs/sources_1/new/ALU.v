@@ -46,7 +46,7 @@ module ALU (
       carryout = (a[0] & b[0]) | (a[0] & carryin) | (b[0] & carryin);
       for (i = 1; i <= SIZE; i = i + 1) begin
         fulladder(a[i], b[i], carryout, sum[i], carryout);
-      end
+      end    
     end
   endtask
   
