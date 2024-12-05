@@ -1,0 +1,101 @@
+`timescale 1ns / 1ps
+
+module tb_ALU_CLA;
+
+    // 参数定义
+    parameter SIZE = 31;
+    parameter CLK_PERIOD = 10; // 时钟周期为10ns
+
+    // 输入信号声明
+    reg [3:0] OP;
+    reg [SIZE:0] A, B;
+    reg Rst, clk;
+
+    // 输出信号声明
+    wire [SIZE:0] F;
+    wire ZF, CF, OF, SF, PF;
+
+    // 实例化被测试的ALU模块
+    ALU uut (
+        .OP(OP),
+        .A(A),
+        .B(B),
+        .Rst(Rst),
+        .clk(clk),
+        .F(F),
+        .ZF(ZF),
+        .CF(CF),
+        .OF(OF),
+        .SF(SF),
+        .PF(PF)
+    );
+
+    // 时钟生成
+    always #(CLK_PERIOD/2) clk = ~clk;
+
+    // 测试过程
+    initial begin
+        // 初始化输入
+        OP = 4'b0000;
+        A = 0;
+        B = 0;
+        Rst = 1;
+        clk = 0;
+
+        // 等待几个时钟周期
+        #(CLK_PERIOD*5);
+
+        // 释放复位
+        Rst = 0;
+        #(CLK_PERIOD*2);
+
+        // 测试超前进位加法（OP = 4'b0101）
+        OP = 4'b0101;
+
+        // 测试用例1：简单加法
+        A = 32'h00000523;
+        B = 32'h00000112;
+        #(CLK_PERIOD*2);
+        if (F !== 32'h00000635) $display("Error: 1 + 2 should be 3, but got %h", F);
+        else $display("Test case 1 passed: 1 + 2 = 3");
+
+        // 测试用例2：大数相加
+        A = 32'h7FFFFFFF;
+        B = 32'h00000001;
+        #(CLK_PERIOD*2);
+        if (F !== 32'h80000000 || OF !== 1) $display("Error: 7FFFFFFF + 1 should overflow to 80000000");
+        else $display("Test case 2 passed: 7FFFFFFF + 1 = 80000000 (with overflow)");
+
+        // 测试用例3：负数相加
+        A = 32'hFFFFFFFF; // -1 in two's complement
+        B = 32'hFFFFFFFE; // -2 in two's complement
+        #(CLK_PERIOD*2);
+        if (F !== 32'hFFFFFFFD) $display("Error: -1 + (-2) should be -3, but got %h", F);
+        else $display("Test case 3 passed: -1 + (-2) = -3");
+
+        // 测试用例4：进位测试
+        A = 32'hFFFFFFFF;
+        B = 32'h00000001;
+        #(CLK_PERIOD*2);
+        if (F !== 32'h00000000 || CF !== 1) $display("Error: FFFFFFFF + 1 should be 0 with carry");
+        else $display("Test case 4 passed: FFFFFFFF + 1 = 0 (with carry)");
+
+        // 测试用例5：零结果测试
+        A = 32'h00000000;
+        B = 32'h00000000;
+        #(CLK_PERIOD*2);
+        if (F !== 32'h00000000 || ZF !== 1) $display("Error: 0 + 0 should be 0 with zero flag set");
+        else $display("Test case 5 passed: 0 + 0 = 0 (with zero flag)");
+
+        // 结束仿真
+        #(CLK_PERIOD*5);
+        $finish;
+    end
+
+    // 监视输出
+    always @(posedge clk) begin
+        $display("Time=%0t: OP=%b, A=%h, B=%h, F=%h, ZF=%b, CF=%b, OF=%b, SF=%b, PF=%b",
+                 $time, OP, A, B, F, ZF, CF, OF, SF, PF);
+    end
+
+endmodule
