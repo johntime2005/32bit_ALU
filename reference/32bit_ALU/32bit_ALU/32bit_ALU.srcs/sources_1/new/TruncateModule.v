@@ -13,7 +13,6 @@ module Cut_decoder (
   not (Nbite[4], bite[4]);
 
   ///对bite进行译码，输出32位信号
-  wire [31:0] judge;
   and (judge[0], Nbite[4], Nbite[3], Nbite[2], Nbite[1], Nbite[0]);
   and (judge[1], Nbite[4], Nbite[3], Nbite[2], Nbite[1], bite[0]);
   and (judge[2], Nbite[4], Nbite[3], Nbite[2], bite[1], Nbite[0]);
